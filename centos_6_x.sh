@@ -4,6 +4,10 @@
 
 set -e
 
+if ! type wget > /dev/null 2>&1; then
+  yum install -y wget > /dev/null
+fi
+
 REPO_URL="http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm"
 
 if [ "$EUID" -ne "0" ]; then
@@ -11,7 +15,7 @@ if [ "$EUID" -ne "0" ]; then
   exit 1
 fi
 
-if which puppet > /dev/null 2>&1; then
+if type puppet > /dev/null 2>&1; then
   echo "Puppet is already installed."
   exit 0
 fi
